@@ -1,0 +1,52 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{post.title}}{% endblock%}
+
+{% block content %}
+<div>
+	<article>
+               <h2><a href = "/blog/view_post/{{post.slug}}">{{post.title}}</a></h2>
+                <p class="lead">{{post.posted}}</p>
+
+                <p style="color:white" class="content">{{post.body}}</p>
+                <div class="commentlink"><a href="/blog/view_post/{{post.slug}}">{{comment}} Comments</a></div>
+            <div class="taglink">Tags: <a href="/blog/tag/{{post.tag.slug}}">{{post.tag}}</a></div>
+            <hr />
+    </article>
+
+{% if comments %}
+    <p>Comments:</p>
+{% endif %}
+
+    {% for comment in comments %}
+    <ul id="comments" class="comments" style="margin: 0; padding: 0">
+        <li class="comment" style="list-style: none;">
+            <div class="clearfix">
+                <h4 class="pull-left">{{ comment.author }}</h4>
+                <p class="pull-right">{{ comment.created }}</p>
+            </div>
+            <p style="color: white;">
+                {{ comment.body }}
+            </p>
+        </li>
+        <hr />
+    </ul>
+    {% endfor %}
+        <div id="addc">Add a comment</div>
+        <form class="form-inline" "/blog/add_comment/{{post.slug}}/" method="post" role="form">
+            {% csrf_token %}
+            <div>
+            <label class="sr-only" for="name">Name {{ form.author }}</label>
+            <input type="text" class="form-control" id="name" placeholder="Name">
+        </div>
+
+        <div style = "margin-top: 1em;">
+            {{ form.body }}
+        </div>
+ 
+        <div >
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        </form>
+    </div>
+{% endblock %}
