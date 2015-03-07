@@ -2,17 +2,39 @@
 {% block title %}Welcome to my blog!{% endblock %}
 
 {% block content %}
+<h1 style="color:white">Blog</h1>
+<hr />
 	{% if posts %}
 			{% for post in posts.object_list %}
-            <article>
-               <h2><a href = "/blog/view_post/{{post.slug}}">{{post.title}}</a></h2>
-                <p class="lead">{{post.posted}}</p>
+                {% if post.image %}
+                <div class="col-md-4">
+                    <img src="{{MEDIA_URL}}{{post.image}}" class="img-thumbnail" alt="Thumbnail Image"/>
+                </div>
+                <div class="col-md-8">
+                <article>
+                   <h2><a href = "/blog/view_post/{{post.slug}}">{{post.title}}</a> | <a href={{post.url}}>{{post.link}}</a></h2>
+                    <p class="lead text-muted">{{post.posted}}</p>
+                    <p style="color:white" class="content">{{post.body}}</p>
+                    <div class="commentlink"><a href="/blog/view_post/{{post.slug}}">Comments</a></div>
+                    <div class="taglink">Tags: <a href="/blog/tag/{{post.tag.slug}}">{{post.tag}}</a></div>
+                    
+                </article>
+                </div>
+                <div class="col-md-12">
+                <hr />
+                </div>
+                {% else %}
+                <article>
+                   <h2><a href = "/blog/view_post/{{post.slug}}">{{post.title}}</a></h2>
+                    <p class="lead text-muted">{{post.posted}}</p>
 
-                <p style="color:white" class="content">{{post.body}}</p>
-                <div class="commentlink"><a href="/blog/view_post/{{post.slug}}">Comments</a></div>
-            <div class="taglink">Tags: <a href="/blog/tag/{{post.tag.slug}}">{{post.tag}}</a></div>
-            <hr />
-            </article>
+                    <p style="color:white" class="content">{{post.body}}</p>
+                    <div class="commentlink"><a href="/blog/view_post/{{post.slug}}">Comments</a></div>
+                    <div class="taglink">Tags: <a href="/blog/tag/{{post.tag.slug}}">{{post.tag}}</a></div>
+                    <hr />
+                </article>
+
+                {% endif %}
 			{% endfor %}
         
 	{% else %}

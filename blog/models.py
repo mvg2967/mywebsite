@@ -8,6 +8,10 @@ class Post(models.Model):
 	body = models.TextField()
 	posted = models.DateField(db_index=True, auto_now_add=True)
 	tag = models.ForeignKey('blog.Tag')
+	url = models.CharField(max_length=100, unique=True, null=True, blank=True)
+	link = models.CharField(max_length=100, unique=True, null=True, blank=True)
+	image = models.ImageField(upload_to='images/blog/', null=True,blank=True)
+	thumbnail = models.BooleanField(default=False, blank=True)
 
 	def __str__(self):
 		return self.title

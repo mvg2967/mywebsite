@@ -98,7 +98,7 @@ def month(request, year, month):
 
 def view_post_by_tag(request,slug):
 	tag = get_object_or_404(Tag, slug=slug)
-	post = Post.objects.filter(tag=tag)
+	post = Post.objects.all().filter(tag=tag)
 	context_dict = {'posts':post, 'tag':tag}
 	context_dict['months'] = mkmonths()
 	return render(request, "blog/tag.html", context_dict)
